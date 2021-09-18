@@ -1,5 +1,6 @@
 <?php
  include_once "../include/functions.php";
+ include_once "../include/connection.php";
  session_start();
  if(isset($_SESSION['author_role'])){
     ?>
@@ -77,11 +78,78 @@
                 <h1 class="h2">Dashboard</h1>
                 <h6>Hello <?php echo $_SESSION['author_name']; ?> | You role is <?php echo $_SESSION['author_role'] ?> </h6>
             </div>
-    
+            <div>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="exampleInputName" class="form-label">Name</label>
+                        <input name="author_name" type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" value="<?php echo $_SESSION['author_name'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input name="author_email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $_SESSION['author_email'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input name="author_password" type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputBio" class="form-label">Bio</label>
+                        <textarea name="author_bio" class="form-control" id="exampleInputTextArea1" aria-describedby="emailHelp"><?php echo $_SESSION['author_bio'] ?></textarea>
+                    </div>
+                    <button name="update" type="submit" class="btn btn-primary">Update</button>
+                </form>
+                <?php
+                    if(isset($_POST['update'])){
+                        $author_name = mysqli_escape_string($conn, $_POST['author_name']);
+                        $author_email = mysqli_escape_string($conn, $_POST['author_email']);
+                        $author_password = mysqli_escape_string($conn, $_POST['author_password']);
+                        $author_bio = mysqli_escape_string($conn, $_POST['author_bio']);
+                        if(empty($author_name) OR empty($author_email) OR empty($author_bio)){
+                            echo 'Empty Fields';
+                        }else{
+                            if(!filter_var($author_email, FILTER_VALIDATE_EMAIL)){
+                                echo 'Please enter a valid email';
+                            }else{
+                                $sql = "SELECT * FROM `author` WHERE `author_email`='$author_email'";
+                                $result = mysqli_query($conn, $sql);
+                                if(mysqli_num_rows($result) > 0){
+                                    echo 'Enter Valid Email';
+                                }else{
+                                    $user_id = $_SESSION['author_id'];
+                                    if(empty($author_password)){
+                                        $sql = "UPDATE `author` SET author_name='$author_name', author_email='$author_email', author_bio='$author_bio' WHERE author_id='$user_id';";
+                                        if(mysqli_query($conn,$sql)){
+                                            echo 'Record Updated';
+                                            $_SESSION['author_name'] = $author_name;
+                                            $_SESSION['author_email'] = $author_email;
+                                            $_SESSION['author_bio'] = $author_bio;
+                                        }else{
+                                            echo 'error';
+                                        }
+                                    }else{
+                                        $hash = password_hash($author_password, PASSWORD_DEFAULT);
+                                        $sql = "UPDATE `author` SET author_name='$author_name', author_email='$author_email', author_password='$hash', author_bio='$author_bio' WHERE author_id='$user_id';";
+                                        if(mysqli_query($conn,$sql)){
+                                            session_unset();
+                                            session_destroy();
+                                            header("Location:login.php?message=Record+Updated.+You+May+Login+Again");
+                                        }else{
+                                            echo 'error1';
+                                        }
+                                    }
+                                }
+                                
+                            }
+                            
+                        }
+                    }
+                ?>
+            </div>
             <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
             </main>
         </div>
         </div>
+    
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/scroll.js"></script>
