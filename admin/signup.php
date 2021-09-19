@@ -44,16 +44,16 @@
             <form method="POST" class="form-signup">
                 <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
                 <div class="form-floating">
-                <input type="text" class="form-control" name="author_name" id="InputName" placeholder="Name" required>
-                <label for="floatingInput">Name</label>
+                    <input type="text" class="form-control" name="author_name" id="InputName" placeholder="Name" required>
+                    <label for="floatingInput">Name</label>
                 </div>
                 <div class="form-floating">
-                <input type="email" class="form-control" name="author_email" id="InputEmail" placeholder="name@example.com" required>
-                <label for="floatingInput">Email address</label>
+                    <input type="email" class="form-control" name="author_email" id="InputEmail" placeholder="name@example.com" required>
+                    <label for="floatingInput">Email address</label>
                 </div>
                 <div class="form-floating">
-                <input type="password" class="form-control" name="author_password" id="InputPassword" placeholder="Password" required>
-                <label for="floatingPassword">Password</label>
+                    <input type="password" class="form-control" name="author_password" id="InputPassword" placeholder="Password" required>
+                    <label for="floatingPassword">Password</label>
                 </div><br>
                 <button class="w-100 btn btn-lg btn-primary" name="signup" type="submit">Sign Up</button>
                 <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>

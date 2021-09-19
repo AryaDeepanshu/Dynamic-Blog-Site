@@ -2,7 +2,7 @@
  include_once "../include/functions.php";
  include_once "../include/connection.php";
  session_start();
- if(isset($_SESSION['author_role'])){
+if(isset($_SESSION['author_role'])){
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -82,11 +82,11 @@
                 <form method="POST">
                     <div class="mb-3">
                         <label for="exampleInputName" class="form-label">Name</label>
-                        <input name="author_name" type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" value="<?php echo $_SESSION['author_name'] ?>">
+                        <input name="author_name" type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="<?php echo $_SESSION['author_name']; ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input name="author_email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $_SESSION['author_email'] ?>">
+                        <input name="author_email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="<?php echo $_SESSION['author_email'];?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputBio" class="form-label">Bio</label>
-                        <textarea name="author_bio" class="form-control" id="exampleInputTextArea1" aria-describedby="emailHelp"><?php echo $_SESSION['author_bio'] ?></textarea>
+                        <textarea name="author_bio" class="form-control" id="exampleInputTextArea1" aria-describedby="emailHelp" placeholder="<?php echo $_SESSION['author_bio']; ?>"></textarea>
                     </div>
                     <button name="update" type="submit" class="btn btn-primary">Update</button>
                 </form>
@@ -132,7 +132,7 @@
                                         if(mysqli_query($conn,$sql)){
                                             session_unset();
                                             session_destroy();
-                                            header("Location:login.php?message=Record+Updated.+You+May+Login+Again");
+                                            echo 'Refresh Page To login again';
                                         }else{
                                             echo 'error1';
                                         }
