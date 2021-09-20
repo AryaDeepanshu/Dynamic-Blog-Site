@@ -11,13 +11,17 @@
     <title>My Dynamic Site</title>
     <link rel="stylesheet" href="style/bootstrap.min.css">
     <link rel="stylesheet" href="style/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 </head>
 <body>
+  
     <?php include_once "include/nav.php";?>
     <?php add_jumbotron();?>
-    <div class="container">
+    <div class=container>
+    <div class="row" data-masonry='{"percentPosition": true }'>
+    
       <?php
-        $sql = "SELECT * FROM `post`";
+        $sql = "SELECT * FROM `post` ORDER BY post_id DESC";
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($result)){
             $post_title = $row['post_title'];
@@ -31,6 +35,7 @@
             while($rowauthor = mysqli_fetch_assoc($resultauthor)){
                 $post_author_name = $rowauthor['author_name'];
       ?>
+      <div class="col-sm-6 col-lg-4 mb-4">
         <div class="card" style="width: 18rem;">
           <img src="<?php echo $post_image; ?>" class="card-img-top" alt="...">
           <div class="card-body">
@@ -40,7 +45,10 @@
             <a href="post.php?id=<?php echo $post_id; ?>" class="btn btn-primary">Read More</a>
           </div>
       </div>
+      </div>
       <?php }} ?>
+    
+    </div>
     </div>
 
 <script src="js/jquery.js"></script>
