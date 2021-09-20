@@ -1,3 +1,3 @@
 <?php
-    $conn = mysqli_connect("localhost", "root", "", "dynamic")
+    $conn = mysqli_connect("localhost", "root", "", "dynamic");
 ?>

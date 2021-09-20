@@ -1,5 +1,4 @@
 <?php
- include_once "../include/functions.php";
  include_once "../include/connection.php";
  session_start();
 if(isset($_SESSION['author_role'])){
@@ -33,24 +32,24 @@ if(isset($_SESSION['author_role'])){
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Posts</h1>
-                    <h6>Hello <?php echo $_SESSION['author_name']; ?> | You role is <?php echo $_SESSION['author_role'] ?> </h6>
+                    <h6>Hello<?php echo ' '.$_SESSION['author_name'].' | You role is '.$_SESSION['author_role']; ?></h6>
                 </div>
                 <div>
                     <h1>Add New Post:</h1>
                     
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="exampleInputTitile" class="form-label">Title</label>
                             <input name="post_title" type="text" class="form-control" id="exampleInputTitile" aria-describedby="emailHelp" placeholder="Post Title">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputTitile" class="form-label">Category</label>
-                            <select class="form-select" aria-label="Default select example" placeholder="Select Category">
+                            <select name="post_category" class="form-select" aria-label="Default select example" placeholder="Select Category">
                                 <?php
                                     $sql = "SELECT * FROM `category` ORDER BY category_id";
                                     $result = mysqli_query($conn,$sql);
                                     while($row = mysqli_fetch_assoc($result)){
-                                        echo '<option value="'.$row['category_id'].'">'.$row['category_name'].'</option>';
+                                    echo '<option value="'.$row['category_id'].'">'.$row['category_name'].'</option>';
                                     }
                                 ?>
                             </select>
@@ -62,7 +61,7 @@ if(isset($_SESSION['author_role'])){
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputImage" class="form-label">Image</label>
-                            <input name="post_image" type="file" class="form-control" id="exampleInputImage" aria-describedby="emailHelp">
+                            <input name="file" type="file" class="form-control" id="exampleInputImage" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputKeyword" class="form-label">Keywords</label>
@@ -83,13 +82,13 @@ if(isset($_SESSION['author_role'])){
                                 exit();
                             }
                 
-                            
-                            $post_image = $_FILES['post_image'];
-                            $fileName = $post_image['name'];
-                            $fileType = $post_image['type'];
-                            $fileTmp = $post_image['tmp_name'];
-                            $fileErr = $post_image['error'];
-                            $fileSize = $post_image['size'];
+
+                            $file = $_FILES['file'];
+                            $fileName = $file['name'];
+                            $fileType = $file['type'];
+                            $fileTmp = $file['tmp_name'];
+                            $fileErr = $file['error'];
+                            $fileSize = $file['size'];
                             $fileEXT = explode('.', $fileName);
                             $fileExtention = strtolower(end($fileEXT));
                             $allowedEXT = array('jpg', 'jpeg', 'png');
@@ -103,23 +102,24 @@ if(isset($_SESSION['author_role'])){
                                         echo 'Image Uploaded';
                                         $sql = "INSERT INTO `post` (`post_title`, `post_content`, `post_image`, 
                                         `post_date`, `post_category`, `post_author`, `post_keyword`) VALUES('$post_title', 
-                                        '$post_content', '$dbdestinamtion', '$post_date', '$post_category', '$post_author', '$post_keyword')";
+                                        '$post_content', '$dbdestination', '$post_date', '$post_category', '$post_author', '$post_keyword')";
                                         if(mysqli_query($conn,$sql)){
-                                            header("Location: post.php?message=Post+published");
+                                            echo("<script>location.href = '/admin/post.php?msg=Post+Published';</script>");
                                             exit();
                                         }else{
-                                            header("Location: post.php?message=error");
-                                            exit();                                        }
+                                            echo("<script>location.href = '/admin/newpost.php?msg=error';</script>");
+                                            exit(); 
+                                        }  
                                     }else{
-                                        header("Location: newpost.php?message=Image+size+too+big");
+                                        echo("<script>location.href = '/admin/newpost.php?msg=Image+size+too+big';</script>");
                                         exit();
                                     }
                                 }else{
-                                    header("Location: newpost.php?message=Somethinh+went+wrong");
+                                    echo("<script>location.href = '/admin/newpost.php?msg=Something+went+wrong';</script>");
                                     exit();
                                 }
                             }else{
-                                header("Location: newpost.php?message=Wrong+file+type");
+                                echo("<script>location.href = '/admin/newpost.php?msg=Wrong+file+type';</script>");
                                 exit();
                             }
                         }
