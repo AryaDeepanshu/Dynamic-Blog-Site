@@ -63,10 +63,10 @@ if(isset($_SESSION['author_role'])){
                                             <th scope="row"><?php echo $count;?></th>
                                             <td><img src="<?php echo '/'.$row['post_image'];?>" width="50px" height="50px"></td>
                                             <td><?php echo $row['post_title'];?></td>
-                                            <td><a href="deletepost.php?id=<?php echo $row['post_id'];?>"><button class="btn btn-danger">Delete</button></a></td>
+                                            <td><a onclick="return confirm('Are you sure you want to delete the post.')" href="deletepost.php?id=<?php echo $row['post_id'];?>"><button class="btn btn-danger">Delete</button></a></td>
                                             </tr> 
 
-                    <?php } }else{
+                    <?php $count+=1;} }else{
                                 ?>
                                 <table class="table">
                                     <thead>
@@ -99,7 +99,7 @@ if(isset($_SESSION['author_role'])){
                                                     <td><img src="<?php echo '/'.$row['post_image'];?>" width="50px" height="50px"></td>
                                                     <td><?php echo $row['post_title'];?></td>
                                                     <td><?php echo $post_author_name;?></td>
-                                                    <td><a href="editpost.php?id=<?php echo $row['post_id'];?>"><button class="btn btn-info">Edit</button></a> <a href="deletepost.php?id=<?php echo $row['post_id'];?>"><button class="btn btn-danger">Delete</button></a></td>
+                                                    <td><a href="editpost.php?id=<?php echo $row['post_id'];?>"><button class="btn btn-info">Edit</button></a> <a onclick="return confirm('Are you sure you want to delete the post.')" href="deletepost.php?id=<?php echo $row['post_id'];?>"><button class="btn btn-danger">Delete</button></a></td>
                                                     </tr>
 
 
