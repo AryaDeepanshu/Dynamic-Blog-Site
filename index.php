@@ -1,5 +1,6 @@
 <?php
-  include_once "include/functions.php"
+  include_once "include/functions.php";
+  include_once "include/connection.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,16 +16,32 @@
     <?php include_once "include/nav.php";?>
     <?php add_jumbotron();?>
     <div class="container">
+      <?php
+        $sql = "SELECT * FROM `post`";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)){
+            $post_title = $row['post_title'];
+            $post_content = $row['post_content'];
+            $post_image = $row['post_image'];
+            $post_id = $row['post_id'];
+            $post_author = $row['post_author'];
+
+            $sqlauthor = "SELECT * FROM `author` WHERE author_id='$post_author'";
+            $resultauthor = mysqli_query($conn, $sqlauthor);
+            while($rowauthor = mysqli_fetch_assoc($resultauthor)){
+                $post_author_name = $rowauthor['author_name'];
+      ?>
         <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
+          <img src="<?php echo $post_image; ?>" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title"><?php echo $post_title; ?></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><?php echo $post_author_name; ?></h6>
+            <p class="card-text"><?php echo substr($post_content,0,50).'...'; ?></p>
+            <a href="post.php?id=<?php echo $post_id; ?>" class="btn btn-primary">Read More</a>
           </div>
       </div>
-    </div1>
+      <?php }} ?>
+    </div>
 
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
