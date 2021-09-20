@@ -38,6 +38,77 @@ if(isset($_SESSION['author_role'])){
                 <div>
                     <h1>All Posts:</h1>
                     <a href="newpost.php"><button class="btn btn-primary" >Add new post</button></a>
+                    <hr>
+                    <?php 
+                        if($_SESSION['author_role'] === 'author'){
+                            ?>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Post Image</th>
+                                    <th scope="col">Post Title</th>
+                                    <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $author = $_SESSION['author_id'];
+                                        $sql = "SELECT * FROM `post` WHERE post_author='$author' ORDER BY post_id DESC";
+                                        $result = mysqli_query($conn, $sql);
+                                        $count = 1;
+                                        while($row = mysqli_fetch_assoc($result)){
+                                            ?>
+                                            <tr>
+                                            <th scope="row"><?php echo $count;?></th>
+                                            <td><img src="<?php echo '/'.$row['post_image'];?>" width="50px" height="50px"></td>
+                                            <td><?php echo $row['post_title'];?></td>
+                                            <td><a href="deletepost.php?id=<?php echo $row['post_id'];?>"><button class="btn btn-danger">Delete</button></a></td>
+                                            </tr> 
+
+                    <?php } }else{
+                                ?>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">Post ID</th>
+                                        <th scope="col">Post Image</th>
+                                        <th scope="col">Post Title</th>
+                                        <th scope="col">Post Author</th>
+                                        <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            $sql = "SELECT * FROM `post` ORDER BY post_id DESC";
+                                            $result = mysqli_query($conn, $sql);
+                                            while($row = mysqli_fetch_assoc($result)){
+                                                $post_title = $row['post_title'];
+                                                $post_content = $row['post_content'];
+                                                $post_image = $row['post_image'];
+                                                $post_id = $row['post_id'];
+                                                $post_author = $row['post_author'];
+        
+                                                $sqlauthor = "SELECT * FROM `author` WHERE author_id='$post_author'";
+                                                $resultauthor = mysqli_query($conn, $sqlauthor);
+                                                while($rowauthor = mysqli_fetch_assoc($resultauthor)){
+                                                    $post_author_name = $rowauthor['author_name'];
+                                                    ?>
+                                                    <tr>
+                                                    <th scope="row"><?php echo $row['post_id'];?></th>
+                                                    <td><img src="<?php echo '/'.$row['post_image'];?>" width="50px" height="50px"></td>
+                                                    <td><?php echo $row['post_title'];?></td>
+                                                    <td><?php echo $post_author_name;?></td>
+                                                    <td><a href="editpost.php?id=<?php echo $row['post_id'];?>"><button class="btn btn-info">Edit</button></a> <a href="deletepost.php?id=<?php echo $row['post_id'];?>"><button class="btn btn-danger">Delete</button></a></td>
+                                                    </tr>
+
+
+                            <?php } } } ?>
+                    
+                    
+                    
+                        </tbody>
+                        </table>
                 </div>
                 <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
                 </main>
@@ -50,6 +121,7 @@ if(isset($_SESSION['author_role'])){
     </body>
     </html>
     <?php
+    
  }else{
     header("Location:login.php");
  }
