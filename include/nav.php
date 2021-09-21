@@ -12,6 +12,17 @@ include_once("connection.php");
         <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
+        <?php
+            $pageSql = 'SELECT * FROM `page`';
+            $pageResult = mysqli_query($conn, $pageSql);
+            while($pageRow = mysqli_fetch_assoc($pageResult)){
+                $page_id = $pageRow['page_id'];
+                $page_title = $pageRow['page_title'];
+                ?>
+            <li class="nav-item">
+                <a class="nav-link" href="page.php?id=<?php echo $page_id; ?>"><?php echo $page_title; ?></a>
+            </li>
+            <?php } ?>
         <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
         </li>
