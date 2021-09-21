@@ -42,7 +42,7 @@
                         <h1><?php echo $post_title ?></h1>
                         <hr>
                         <h6>Posted On: <?php echo $post_date; ?> | By: <?php getAuthorName($post_author); ?></h6>
-                        <h4>Category: <?php echo getCategoryName($post_category); ?></h4>
+                        <h4>Category:<a href="category.php?id=<?php echo $post_category; ?>"> <?php echo getCategoryName($post_category); ?></a></a></h4>
                         <p><?php echo $post_content ?></p>
                     </div>
 
