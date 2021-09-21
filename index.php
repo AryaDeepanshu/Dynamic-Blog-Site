@@ -16,12 +16,32 @@
 <body>
   
     <?php include_once "include/nav.php";?>
-    <?php add_jumbotron();?>
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+          <h1 class="display-5 fw-bold"><?php getSettingValue('home_jumbo_title'); ?></h1>
+          <p class="col-md-8 fs-4"><?php getSettingValue('home_jumbo_desc'); ?></p>
+          <button class="btn btn-primary btn-lg" type="button">Example button</button>
+        </div>
+    </div>
     <div class=container>
+    <?php
+      $sqlpg = "SELECT * FROM `post`";
+      $resultpg = mysqli_query($conn, $sqlpg);
+      $totalPost = mysqli_num_rows($resultpg);
+      $totalPage = ceil($totalPost/3);
+    ?>
+    <?php
+      if(isset($_GET['p'])){
+        $pageId = $_GET['p'];
+        $start = ($pageId*3)-3;
+        $sql = "SELECT * FROM `post` ORDER BY post_id DESC LIMIT $start,3";
+      }else{
+        $sql = "SELECT * FROM `post` ORDER BY post_id DESC LIMIT 0,3";
+      }
+    ?>
     <div class="row" data-masonry='{"percentPosition": true }'>
     
       <?php
-        $sql = "SELECT * FROM `post` ORDER BY post_id DESC";
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($result)){
             $post_title = $row['post_title'];
@@ -49,7 +69,16 @@
       <?php }} ?>
     
     </div>
-    </div>
+    <?php
+    echo '<center>';
+      for($i=1;$i<=$totalPage;$i++){
+        ?>
+        <a href="?p=<?php echo $i; ?>"><button class="btn btn-info"><?php echo $i; ?></button></a>&nbsp;
+        <?php
+      }
+      echo '</center>';
+    ?>
+    </div><br><br>
 
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>

@@ -29,6 +29,12 @@
                                             Pages
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="setting.php">
+                                            <span data-feather="file"></span>
+                                            Settings
+                                            </a>
+                                        </li>
                                     <?php
                                 }
                             }

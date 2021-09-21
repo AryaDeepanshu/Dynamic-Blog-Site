@@ -25,4 +25,22 @@
           echo $row['category_name'];
         }
   }
+    function getSettingValue($setting){
+        global $conn;
+        $sql = "SELECT * FROM `setting` WHERE setting_name='$setting'";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)){
+          $value = $row['setting_value'];
+          echo $value;
+        }
+    }
+    function setSettingValue($setting, $value){
+      global $conn;
+      $sql = "UPDATE `setting` SET setting_value='$value' WHERE setting_name='$setting'";
+      if(mysqli_query($conn, $sql)){
+        return true;
+      }else{
+        return false;
+      }
+  }
 ?>
