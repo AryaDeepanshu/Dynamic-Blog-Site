@@ -23,6 +23,12 @@
                                             Categories
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="page.php">
+                                            <span data-feather="file"></span>
+                                            Pages
+                                            </a>
+                                        </li>
                                     <?php
                                 }
                             }
