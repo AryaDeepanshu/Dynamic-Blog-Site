@@ -38,8 +38,17 @@ if(isset($_SESSION['author_role'])){
                 </div>
                 <div>
                     <h1>All Categories:</h1>
-                    <a href="newcategory.php"><button class="btn btn-primary" >Add new Category</button></a>
+                    <button id="addCatBtn" class="btn btn-primary" >Add new Category</button>
                     <hr>
+                    <div style ="display:none" id="addCatForm">
+                        <form  action="newcategory.php" method="POST">
+                            <div class="mb-3">
+                                <label for="exampleInputTitile" class="form-label">Category Name</label>
+                                <input name="category_name" type="text" class="form-control" id="exampleInputCategoryName" aria-describedby="emailHelp" placeholder="Category Name">
+                            </div>
+                            <button name="submit" type="submit" class="btn btn-success">Add</button>
+                        </form>
+                    </div>
                     <?php 
                         ?>
                         <table class="table">
@@ -80,6 +89,13 @@ if(isset($_SESSION['author_role'])){
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/scroll.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#addCatBtn').click(function(){
+                $('#addCatForm').slideToggle();
+            });
+        });
+    </script>
     </body>
     </html>
     <?php
