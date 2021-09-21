@@ -12,6 +12,7 @@ if(isset($_SESSION['author_role'])){
         <title>Admin Panel</title>
         <link rel="stylesheet" href="../style/bootstrap.min.css">
         <link rel="stylesheet" href="../style/style.css">
+        <script src="https://cdn.tiny.cloud/1/aouh3ey3zwhnv54c4n9cm7h4upepxsmfznw2naqdaru1w2kl/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     </head>
     <body>
         <header class="navbar navbar-dark sticky-top bg-dark shadow">
@@ -134,6 +135,16 @@ if(isset($_SESSION['author_role'])){
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/scroll.js"></script>
+    <script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+      toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
+      toolbar_mode: 'floating',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+   });
+  </script>
     </body>
     </html>
     <?php
